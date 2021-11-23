@@ -30,28 +30,48 @@ app.engine('handlebars', exphbs.engine());
 app.set('view engine', 'handlebars');
 
 app.get('/', async function(req, res) {
-	const avos = await avo.topFiveDeals()
+	try {
+		const avos = await avo.topFiveDeals()
 	res.render('index', {
 		avos
 	});
+	} catch (error) {
+		console.log(error)
+	}
+	
 });
 
 app.get('/list', async function(req, res){
-	const list = await avo.listShops()
+	try {
+		const list = await avo.listShops()
 	res.render('avos/shop',{
 		list
 	});
+	} catch (error) {
+		console.log(error)
+	}
+	
 });
 app.get('/list/add', async function(req,res){
-	res.render('avos/add');
+	try {
+		res.render('avos/add');
+	} catch (error) {
+		console.log(error)
+	}
+	
 })
 
 
 app.post('/list/add', async function(req,res){
-	console.log(req.body.shop_name)
+	try {
+		console.log(req.body.shop_name)
 	 await avo.createShop(req.body.shop_name)
 
 	res.render('avos/add');
+	} catch (error) {
+		console.log(error)
+	}
+	
 })
 
 // app.post('/deal',  async function (req, res){
